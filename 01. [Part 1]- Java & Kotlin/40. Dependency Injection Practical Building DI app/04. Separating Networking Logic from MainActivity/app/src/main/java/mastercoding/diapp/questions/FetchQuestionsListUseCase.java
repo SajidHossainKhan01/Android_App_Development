@@ -1,0 +1,87 @@
+package mastercoding.diapp.questions;
+
+import androidx.annotation.Nullable;
+
+import com.google.gson.Gson;
+
+import java.util.Collections;
+import java.util.List;
+
+import mastercoding.diapp.Constants;
+import mastercoding.diapp.networking.QuestionsListResponseSchema;
+import mastercoding.diapp.networking.StackoverflowApi;
+import mastercoding.diapp.questionslist.BaseObservable;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class FetchQuestionsListUseCase extends BaseObservable<FetchQuestionsListUseCase.Listener> {
+
+
+    public interface Listener {
+        void onFetchOfQuestionsSucceeded(List<Question> questions);
+        void onFetchOfQuestionsFailed();
+
+    }
+
+    private final StackoverflowApi stackoverflowApi;
+
+
+    @Nullable
+    Call<QuestionsListResponseSchema> call;
+
+
+    public FetchQuestionsListUseCase() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        this.stackoverflowApi = retrofit.create(StackoverflowApi.class);
+    }
+
+
+    public void fetchLastActiveQuestionsAndNotify(int numOfQuestions){
+        cancelCurrentFetchIfActive();
+
+        call = stackoverflowApi.lastActiveQuestions(numOfQuestions);
+        call.enqueue(new Callback<QuestionsListResponseSchema>() {
+            @Override
+            public void onResponse(Call<QuestionsListResponseSchema> call, Response<QuestionsListResponseSchema> response) {
+                if (response.isSuccessful()){
+                    notifySucceeded(response.body().getQuestions());
+                }else
+                {
+                    notifyFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<QuestionsListResponseSchema> call, Throwable t) {
+                notifyFailed();
+            }
+        });
+    }
+
+    private void cancelCurrentFetchIfActive(){
+        if (call != null && !call.isCanceled() && !call.isExecuted()){
+            call.cancel();
+        }
+    }
+
+    private void notifySucceeded(List<Question> questions){
+        List<Question> unmodifiableQuestions = Collections.unmodifiableList(questions);
+        for (Listener listener : getListeners()){
+            listener.onFetchOfQuestionsSucceeded(unmodifiableQuestions);
+        }
+    }
+
+    private void notifyFailed(){
+        for (Listener listener : getListeners()){
+            listener.onFetchOfQuestionsFailed();
+        }
+    }
+
+}
