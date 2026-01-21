@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">JournalApp</string>
+    <string name="welcome_to_journal_app">Welcome to Journal App</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="signin">Login</string>
+    <string name="sign_up">Create Account</string>
+    <string name="create_account">Create Account</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="no_posts_found">No posts found</string>
+    <string name="logout">Logout</string>
+</resources>

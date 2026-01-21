@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "513103563953",
+    "project_id": "journalapp-e7a04",
+    "storage_bucket": "journalapp-e7a04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513103563953:android:7f114a69cfe78023212690",
+        "android_client_info": {
+          "package_name": "com.nailton.journalapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "513103563953-ds2mpj0s917g5d3njl0egmehb712rok3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nailton.journalapp",
+            "certificate_hash": "99f1b35cbbd13282eae9d9e323f71a47b17800dc"
+          }
+        },
+        {
+          "client_id": "513103563953-ierg6u7f78npublrq83fs6q34v73fd7m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPqPD9W0B7aRHArcJUzI3yiiXbFdiBozU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "513103563953-ierg6u7f78npublrq83fs6q34v73fd7m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
